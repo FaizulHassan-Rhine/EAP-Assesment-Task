@@ -1,13 +1,8 @@
 {
-  "rewrites": [{ "source": "/api/(.*)", "destination": "/api" }],
   "functions": {
-    "api/index.js": {
-      "runtime": "nodejs20.x",
+    "pages/api/[...path].js": {
       "memory": 1024,
       "maxDuration": 60
-    },
-    "api/test.js": {
-      "runtime": "nodejs20.x"
     }
   }
 }
