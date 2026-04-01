@@ -1,0 +1,91 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg:           9 9 18;
+    --surface:      16 16 28;
+    --surface-2:    22 22 38;
+    --border:       30 30 52;
+    --border-2:     40 40 68;
+    --text:         226 232 240;
+    --text-muted:   100 116 139;
+    --accent:       99 102 241;
+    --accent-hover: 79 70 229;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    @apply antialiased;
+    background-color: rgb(var(--bg));
+    color: rgb(var(--text));
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  }
+
+  ::-webkit-scrollbar        { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track  { background: transparent; }
+  ::-webkit-scrollbar-thumb  { @apply rounded-full bg-slate-700; }
+  ::-webkit-scrollbar-thumb:hover { @apply bg-slate-600; }
+
+  ::selection { @apply bg-indigo-600/30 text-indigo-100; }
+}
+
+@layer components {
+  /* ── Field ──────────────────────────────────── */
+  .field {
+    @apply w-full rounded-lg border px-3 py-2.5 text-sm transition-all outline-none;
+    background-color: rgb(var(--bg));
+    border-color: rgb(var(--border-2));
+    color: rgb(var(--text));
+  }
+  .field::placeholder { color: rgb(var(--text-muted)); }
+  .field:focus {
+    @apply border-indigo-500 ring-2 ring-indigo-500/20;
+  }
+  .field:disabled { @apply opacity-50 cursor-not-allowed; }
+
+  /* ── Btn ────────────────────────────────────── */
+  .btn { @apply inline-flex items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed; }
+  .btn-primary  { @apply btn bg-indigo-600 text-white hover:bg-indigo-500 active:scale-[0.98]; }
+  .btn-ghost    { @apply btn text-slate-400 hover:bg-white/5 hover:text-white; }
+  .btn-danger   { @apply btn bg-red-500/10 text-red-400 hover:bg-red-500/20 hover:text-red-300; }
+  .btn-outline  { @apply btn border text-slate-300 hover:bg-white/5 hover:text-white; border-color: rgb(var(--border-2)); }
+
+  /* ── Card ───────────────────────────────────── */
+  .card {
+    @apply rounded-xl border;
+    background-color: rgb(var(--surface));
+    border-color: rgb(var(--border));
+  }
+
+  /* ── Badge ──────────────────────────────────── */
+  .badge { @apply inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium; }
+  .badge-green  { @apply badge bg-emerald-500/10 text-emerald-400; }
+  .badge-amber  { @apply badge bg-amber-500/10  text-amber-400; }
+  .badge-red    { @apply badge bg-red-500/10    text-red-400; }
+  .badge-blue   { @apply badge bg-indigo-500/10 text-indigo-400; }
+  .badge-slate  { @apply badge bg-slate-500/10  text-slate-400; }
+
+  /* ── Table ──────────────────────────────────── */
+  .data-table { @apply w-full text-sm; }
+  .data-table thead tr {
+    border-bottom: 1px solid rgb(var(--border));
+    background: rgb(var(--surface-2));
+  }
+  .data-table th { @apply px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider; color: rgb(var(--text-muted)); }
+  .data-table td { @apply px-4 py-3.5; border-bottom: 1px solid rgb(var(--border)); }
+  .data-table tbody tr:last-child td { border-bottom: none; }
+  .data-table tbody tr { transition: background 0.1s; }
+  .data-table tbody tr:hover { background: rgba(255,255,255,0.02); }
+
+  /* ── Page header ────────────────────────────── */
+  .page-title { @apply text-2xl font-bold tracking-tight text-white; }
+  .page-sub   { @apply mt-1 text-sm; color: rgb(var(--text-muted)); }
+
+  /* ── Divider ────────────────────────────────── */
+  .divider { border-color: rgb(var(--border)); }
+}
