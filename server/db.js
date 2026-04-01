@@ -1,15 +1,33 @@
 import mongoose from "mongoose";
 
-let cached = global._mongoose;
+// Reuse connection across serverless invocations
+if (!global._mongoose) {
+  global._mongoose = { conn: null, promise: null };
+}
+const cache = global._mongoose;
 
 export async function connectDb() {
-  if (cached?.conn) return cached.conn;
+  if (cache.conn) return cache.conn;
+
   const uri = process.env.MONGODB_URI;
   if (!uri) throw new Error("MONGODB_URI is not set");
-  cached = global._mongoose = { conn: null, promise: null };
-  if (!cached.promise) {
-    cached.promise = mongoose.connect(uri);
+
+  if (!cache.promise) {
+    cache.promise = mongoose
+      .connect(uri, {
+        serverSelectionTimeoutMS: 8000,
+        connectTimeoutMS: 8000,
+        socketTimeoutMS: 30000,
+        maxPoolSize: 5,
+        bufferCommands: false,
+      })
+      .then((m) => m)
+      .catch((err) => {
+        cache.promise = null;
+        throw err;
+      });
   }
-  cached.conn = await cached.promise;
-  return cached.conn;
+
+  cache.conn = await cache.promise;
+  return cache.conn;
 }

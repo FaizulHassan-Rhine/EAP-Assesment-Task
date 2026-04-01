@@ -7,7 +7,7 @@ import { useAuth } from "@/context/AuthContext";
 import { Boxes, Eye, EyeOff, ArrowRight } from "lucide-react";
 
 export default function RegisterPage() {
-  const { register, loading } = useAuth();
+  const { register } = useAuth();
   const router = useRouter();
   const [name, setName]         = useState("");
   const [email, setEmail]       = useState("");
@@ -15,8 +15,6 @@ export default function RegisterPage() {
   const [showPw, setShowPw]     = useState(false);
   const [error, setError]       = useState("");
   const [pending, setPending]   = useState(false);
-
-  if (loading) return null;
 
   async function onSubmit(e) {
     e.preventDefault();

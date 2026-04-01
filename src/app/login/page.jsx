@@ -7,15 +7,13 @@ import { useAuth } from "@/context/AuthContext";
 import { Boxes, Eye, EyeOff, ArrowRight, Zap } from "lucide-react";
 
 export default function LoginPage() {
-  const { login, loading } = useAuth();
+  const { login } = useAuth();
   const router = useRouter();
   const [email, setEmail]       = useState("");
   const [password, setPassword] = useState("");
   const [showPw, setShowPw]     = useState(false);
   const [error, setError]       = useState("");
   const [pending, setPending]   = useState(false);
-
-  if (loading) return null;
 
   async function onSubmit(e) {
     e.preventDefault();

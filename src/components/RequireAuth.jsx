@@ -3,6 +3,7 @@
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { LoadingScreen } from "@/components/LoadingScreen";
 
 export function RequireAuth({ children }) {
   const { user, loading } = useAuth();
@@ -13,11 +14,7 @@ export function RequireAuth({ children }) {
   }, [loading, user, router]);
 
   if (loading || user === undefined) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-slate-950 text-slate-400">
-        Loading…
-      </div>
-    );
+    return <LoadingScreen message="Loading your workspace…" />;
   }
 
   if (!user) return null;
