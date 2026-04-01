@@ -23,6 +23,9 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
+// Quick ping — no DB needed, confirms the serverless function is alive
+app.get("/api/ping", (_req, res) => res.json({ ok: true, ts: Date.now() }));
+
 // Connect DB before every request (cached after first connect)
 app.use(async (_req, res, next) => {
   try {
